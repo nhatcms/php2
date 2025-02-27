@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách sản phẩm</title>
+</head>
+<body>
+    <?php 
+    // session_start();
+    if (isset($_SESSION['errors'])) {
+        // echo "<ul>";
+        // foreach ($_SESSION['errors'] as $error) {
+        //     echo "<li>$error</li>";
+        // }
+        // echo "</ul>";
+        echo "<p style='color: red'>" . "a" . "</p>";
+        unset($_SESSION['errors']);
+    }
+    ?>
+    <h1>Danh sách sản phẩm</h1>
+    <a href="<?php echo $_ENV['BASE_URL']; ?>/products/create">Thêm sản phẩm mới</a>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Danh mục</th>
+                <th>Tên sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Mô tả</th>
+                <th>Ngày tạo</th>
+                <th>Ngày cập nhật</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($products as $product) {
+                echo "<tr>";
+                echo "<td>" . $product['id'] . "</td>";
+                echo "<td>" . $product['category_name'] . "</td>";
+                echo "<td>" . $product['name'] . "</td>";
+                echo "<td><img src='" . $_ENV['BASE_URL'] . "/" . $product['img_thumbnail'] . "' alt='" . $product['name'] . "' width='50'></td>";
+                echo "<td>" . $product['description'] . "</td>";
+                echo "<td>" . $product['created_at'] . "</td>";
+                echo "<td>" . $product['updated_at'] . "</td>";
+                echo "<td>
+                    <a href='products/" . $product['id'] . "/edit'>Sửa</a>
+                    <a href='" . $_ENV['BASE_URL'] . "/products/" . $product['id'] . "/delete' 
+                       onclick=\"return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')\">Xóa</a>
+                </td>";
+                echo "</tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+</body>
+</html>
